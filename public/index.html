@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GraphQL Schemas and Queries</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>GraphQL Schemas and Queries</h1>
+    <pre id="schemas"></pre>
+    <script>
+        fetch('/graphql', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                query: `
+                    {
+                        __schema {
+                            types {
+                                name
+                                fields {
+                                    name
+                                    type {
+                                        name
+                                        kind
+                                        ofType {
+                                            name
+                                            kind
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                `
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('schemas').textContent = JSON.stringify(data, null, 2);
+        })
+        .catch(error => {
+            document.getElementById('schemas').textContent = 'Error fetching schemas: ' + error.message;
+        });
+    </script>
+</body>
+</html>

@@ -25,7 +25,8 @@
     "prisma:generate:dev": "prisma generate --schema=prisma/schema.dev.prisma",
     "prisma:migrate:dev": "prisma migrate dev --schema=prisma/schema.dev.prisma",
     "prisma:generate:prod": "prisma generate --schema=prisma/schema.prod.prisma",
-    "prisma:migrate:prod": "prisma migrate dev --schema=prisma/schema.prod.prisma"
+    "prisma:migrate:prod": "prisma migrate dev --schema=prisma/schema.prod.prisma",
+    "vercel-build": "prisma generate --schema=prisma/schema.prod.prisma && tsc"
   },
   "dependencies": {
     "@prisma/client": "^5.14.0",

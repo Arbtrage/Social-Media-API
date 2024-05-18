@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "cockroachdb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String     @id @default(uuid())
+  username     String     @unique
+  email        String     @unique
+  password     String
+  refreshToken String?
+  followers    Follower[] @relation("Following")
+  following    Follower[] @relation("Followers")
+  posts        Post[]
+  comments     Comment[]
+  Like         Like[]
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+}
+
+model Post {
+  id          String     @id @default(uuid())
+  content     String
+  media       String?
+  mediaType   MediaType?
+  scheduledAt DateTime?
+  createdAt   DateTime   @default(now())
+  author      User       @relation(fields: [userId], references: [id])
+  userId      String
+  likes       Like[]
+  comments    Comment[]
+}
+
+model Follower {
+  id         String @id @default(uuid())
+  user       User   @relation("Followers", fields: [userId], references: [id])
+  userId     String
+  follower   User   @relation("Following", fields: [followerId], references: [id])
+  followerId String
+}
+
+model Like {
+  id     String @id @default(uuid())
+  post   Post   @relation(fields: [postId], references: [id])
+  postId String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  content   String
+  createdAt DateTime @default(now())
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    String
+  author    User     @relation(fields: [userId], references: [id])
+  userId    String
+}

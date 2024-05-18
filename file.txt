@@ -1,0 +1,51 @@
+/social-media-backend
+├── src
+│   ├── config            # Configuration files
+│   │   └── index.ts
+│   ├── context           # GraphQL context
+│   │   └── index.ts
+│   ├── graphql           # GraphQL schemas and resolvers
+│   │   ├── index.ts
+│   │   ├── schema
+│   │   │   ├── comment.schema.ts
+│   │   │   ├── follow.schema.ts
+│   │   │   ├── like.schema.ts
+│   │   │   ├── post.schema.ts
+│   │   │   └── user.schema.ts
+│   │   ├── resolvers
+│   │   │   ├── comment.resolvers.ts
+│   │   │   ├── follow.resolvers.ts
+│   │   │   ├── like.resolvers.ts
+│   │   │   ├── post.resolvers.ts
+│   │   │   └── user.resolvers.ts
+│   ├── middleware        # Middleware functions
+│   │   └── auth.ts
+│   ├── modules           # Modules for each entity
+│   │   ├── auth
+│   │   │   └── auth.service.ts
+│   │   ├── comment
+│   │   │   └── comment.service.ts
+│   │   ├── follow
+│   │   │   └── follow.service.ts
+│   │   ├── like
+│   │   │   └── like.service.ts
+│   │   ├── post
+│   │   │   └── post.service.ts
+│   │   └── user
+│   │       └── user.service.ts
+│   ├── server.ts         # Server entry point
+│   ├── types             # TypeScript types
+│   │   └── index.d.ts
+│   └── utils             # Utility functions
+│       └── index.ts
+├── .env                  # Environment variables
+├── .eslintrc.js          # ESLint configuration
+├── .gitignore            # Git ignore file
+├── Dockerfile            # Docker configuration
+├── docker-compose.yml    # Docker Compose configuration
+├── package.json          # NPM package configuration
+├── prisma
+│   ├── schema.prisma     # Prisma schema
+│   └── migrations        # Prisma migrations
+├── tsconfig.json         # TypeScript configuration
+└── yarn.lock             # Yarn lock file

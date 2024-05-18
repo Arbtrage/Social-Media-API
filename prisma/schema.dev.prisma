@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String     @id @default(uuid())
+  fullName     String?
+  username     String     @unique
+  email        String     @unique
+  profilePhoto String?
+  password     String
+  refreshToken String?
+  followers    Follower[] @relation("Following")
+  following    Follower[] @relation("Followers")
+  posts        Post[]
+  comments     Comment[]
+  Like         Like[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @default(now())
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+}
+
+model Post {
+  id              String     @id @default(uuid())
+  content         String
+  media           String?
+  mediaType       MediaType?
+  active          Boolean?
+  scheduledAt     DateTime?
+  author          User       @relation(fields: [userId], references: [id])
+  userId          String
+  commentsCount   Int        @default(0)
+  likesCount      Int        @default(0)
+  commentsEnabled Boolean    @default(true)
+  likes           Like[]
+  comments        Comment[]
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @default(now())
+}
+
+model Follower {
+  id         String   @id @default(uuid())
+  user       User     @relation("Followers", fields: [userId], references: [id])
+  userId     String
+  follower   User     @relation("Following", fields: [followerId], references: [id])
+  followerId String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
+}
+
+model Like {
+  id        String   @id @default(uuid())
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  content   String
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    String
+  author    User     @relation(fields: [userId], references: [id])
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}

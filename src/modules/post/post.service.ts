@@ -147,7 +147,7 @@ export const getFeed = async (context: Context) => {
                 where: { followerId: context.user.userId },
                 select: { userId: true }
             })
-        ).map(follower => follower.userId);
+        ).map((follower:any) => follower.userId);
         followingIds.push(context.user.userId);
 
         const posts = await prisma.post.findMany({
@@ -185,7 +185,7 @@ export const getFeed = async (context: Context) => {
             },
             orderBy: { createdAt: 'desc' }
         });
-        const feedData = posts.map(post => ({
+        const feedData = posts.map((post:any) => ({
             ...post,
             likeCount: post.likes.length,
             commentCount: post.comments.length

@@ -13,7 +13,7 @@ async function checkAndActivatePosts() {
                 active: false
             }
         });
-        const activationPromises = postsToActivate.map(post =>
+        const activationPromises = postsToActivate.map((post:any) =>
             prisma.post.update({
                 where: { id: post.id },
                 data: { active: true }

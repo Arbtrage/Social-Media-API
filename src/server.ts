@@ -14,6 +14,7 @@ const server = new ApolloServer({
   schema,
   context: createContext,
   formatError: (err) => ({ message: err.message, status: 400 }),
+  introspection: true
 });
 
 

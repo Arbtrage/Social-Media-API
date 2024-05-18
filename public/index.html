@@ -3,26 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GraphQL Schemas and Queries</title>
+    <title>Social Media API Documentation</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
-        h1 {
+        h1, h2, h3, h4 {
             color: #333;
         }
         pre {
             background: #f4f4f4;
             padding: 10px;
             border-radius: 4px;
+            overflow: auto;
+        }
+        .endpoint {
+            margin-bottom: 20px;
+        }
+        #toc {
+            margin-bottom: 20px;
+        }
+        #toc a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        #toc a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <h1>GraphQL Schemas and Queries</h1>
-    <pre id="schemas"></pre>
+    <h1>Social Media API Documentation</h1>
+    <p>This comprehensive documentation outlines how to interact with the GraphQL API using Postman for each defined schema and its operations.</p>
+
+    <h2>Table of Contents</h2>
+    <div id="toc">
+        <ol>
+            <li><a href="#install-docs">Install Docs</a></li>
+            <li><a href="#readme-docs">Readme Docs</a></li>
+            <li><a href="#api-docs">API Docs</a></li>
+        </ol>
+    </div>
+
+    <h2 id="install-docs">Install Docs</h2>
+    <pre>
+# Installation Instructions
+
+1. Clone the repository:
+   git clone https://github.com/your-repo/social-media-api.git
+
+2. Navigate to the project directory:
+   cd social-media-api
+
+3. Install dependencies:
+   yarn install
+
+4. Set up environment variables:
+   cp .env.example .env
+
+5. Run the application:
+   yarn dev
+    </pre>
+
+    <h2 id="readme-docs">Readme Docs</h2>
+    <pre>
+# Readme
+
+## Overview
+This is a social media API that allows users to create posts, follow other users, and interact with posts through likes and comments.
+
+## Features
+- User Authentication
+- Create, Read, Update, Delete Posts
+- Follow/Unfollow Users
+- Like/Unlike Posts
+- Comment on Posts
+
+## Tech Stack
+- Node.js
+- Express.js
+- Apollo Server
+- Prisma
+- PostgreSQL
+    </pre>
+
+    <h2 id="api-docs">API Docs</h2>
+    <div id="queries"></div>
+    <div id="mutations"></div>
+
     <script>
+        const queriesContainer = document.getElementById('queries');
+        const mutationsContainer = document.getElementById('mutations');
+
         fetch('/graphql', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -30,10 +106,48 @@
                 query: `
                     {
                         __schema {
-                            types {
-                                name
+                            queryType {
                                 fields {
                                     name
+                                    description
+                                    args {
+                                        name
+                                        description
+                                        type {
+                                            name
+                                            kind
+                                            ofType {
+                                                name
+                                                kind
+                                            }
+                                        }
+                                    }
+                                    type {
+                                        name
+                                        kind
+                                        ofType {
+                                            name
+                                            kind
+                                        }
+                                    }
+                                }
+                            }
+                            mutationType {
+                                fields {
+                                    name
+                                    description
+                                    args {
+                                        name
+                                        description
+                                        type {
+                                            name
+                                            kind
+                                            ofType {
+                                                name
+                                                kind
+                                            }
+                                        }
+                                    }
                                     type {
                                         name
                                         kind
@@ -51,11 +165,54 @@
         })
         .then(res => res.json())
         .then(data => {
-            document.getElementById('schemas').textContent = JSON.stringify(data, null, 2);
+            const queryType = data.data.__schema.queryType;
+            const mutationType = data.data.__schema.mutationType;
+
+            displayOperations(queryType, queriesContainer, 'Queries');
+            displayOperations(mutationType, mutationsContainer, 'Mutations');
         })
         .catch(error => {
-            document.getElementById('schemas').textContent = 'Error fetching schemas: ' + error.message;
+            queriesContainer.textContent = 'Error fetching schema: ' + error.message;
+            mutationsContainer.textContent = 'Error fetching schema: ' + error.message;
         });
+
+        function displayOperations(type, container, title) {
+            const operations = type.fields;
+            const sectionTitle = document.createElement('h3');
+            sectionTitle.textContent = title;
+            container.appendChild(sectionTitle);
+
+            operations.forEach(operation => {
+                const operationContainer = document.createElement('div');
+                operationContainer.className = 'endpoint';
+
+                const operationName = document.createElement('h4');
+                operationName.textContent = `${operation.name} (${title})`;
+                operationContainer.appendChild(operationName);
+
+                const operationDescription = document.createElement('p');
+                operationDescription.textContent = operation.description || 'No description available.';
+                operationContainer.appendChild(operationDescription);
+
+                const argsTitle = document.createElement('h5');
+                argsTitle.textContent = 'Arguments:';
+                operationContainer.appendChild(argsTitle);
+
+                const argsList = document.createElement('ul');
+                operation.args.forEach(arg => {
+                    const argItem = document.createElement('li');
+                    argItem.textContent = `${arg.name}: ${arg.type.name || arg.type.ofType.name}`;
+                    argsList.appendChild(argItem);
+                });
+                operationContainer.appendChild(argsList);
+
+                const returnType = document.createElement('p');
+                returnType.textContent = `Returns: ${operation.type.name || operation.type.ofType.name}`;
+                operationContainer.appendChild(returnType);
+
+                container.appendChild(operationContainer);
+            });
+        }
     </script>
 </body>
 </html>

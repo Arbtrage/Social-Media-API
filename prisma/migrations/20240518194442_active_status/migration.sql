@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "Post" ALTER COLUMN "active" DROP NOT NULL,
-ALTER COLUMN "active" DROP DEFAULT;

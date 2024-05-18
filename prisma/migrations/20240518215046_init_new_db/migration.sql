@@ -3,53 +3,67 @@ CREATE TYPE "MediaType" AS ENUM ('IMAGE', 'VIDEO');
 
 -- CreateTable
 CREATE TABLE "User" (
-    "id" TEXT NOT NULL,
-    "username" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
-    "password" TEXT NOT NULL,
-    "refreshToken" TEXT,
+    "id" STRING NOT NULL,
+    "fullName" STRING,
+    "username" STRING NOT NULL,
+    "email" STRING NOT NULL,
+    "profilePhoto" STRING,
+    "password" STRING NOT NULL,
+    "refreshToken" STRING,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Post" (
-    "id" TEXT NOT NULL,
-    "content" TEXT NOT NULL,
-    "media" TEXT,
+    "id" STRING NOT NULL,
+    "content" STRING NOT NULL,
+    "media" STRING,
     "mediaType" "MediaType",
+    "active" BOOL,
     "scheduledAt" TIMESTAMP(3),
+    "userId" STRING NOT NULL,
+    "commentsCount" INT4 NOT NULL DEFAULT 0,
+    "likesCount" INT4 NOT NULL DEFAULT 0,
+    "commentsEnabled" BOOL NOT NULL DEFAULT true,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "userId" TEXT NOT NULL,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Follower" (
-    "id" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
-    "followerId" TEXT NOT NULL,
+    "id" STRING NOT NULL,
+    "userId" STRING NOT NULL,
+    "followerId" STRING NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Follower_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Like" (
-    "id" TEXT NOT NULL,
-    "postId" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
+    "id" STRING NOT NULL,
+    "postId" STRING NOT NULL,
+    "userId" STRING NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Like_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Comment" (
-    "id" TEXT NOT NULL,
-    "content" TEXT NOT NULL,
+    "id" STRING NOT NULL,
+    "content" STRING NOT NULL,
+    "postId" STRING NOT NULL,
+    "userId" STRING NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "postId" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Comment_pkey" PRIMARY KEY ("id")
 );

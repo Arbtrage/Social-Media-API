@@ -23,8 +23,34 @@ export const getAllUsers = async () => {
     }
 };
 
-export const getUserById = async (id: string) => {
+
+export const getUserByName = async (username: string,context:Context) => {
     try {
+        if (!context.user?.userId) throw new Error('Not authenticated');
+        const users = await prisma.user.findMany({
+            where: {
+                username: {
+                    startsWith: username
+                }
+            },
+            select: {
+                id: true,
+                fullName: true,
+                username: true,
+                profilePhoto: true,
+                email: true
+            }
+        });
+        if (users.length===0) throw new Error('User not found');
+        return { message: "User found", data: users }
+    } catch (error) {
+        return new Error((error as Error).message);
+    }
+};
+
+export const getUserById = async (id: string,context:Context) => {
+    try {
+        if (!context.user?.userId) throw new Error('Not authenticated');
         const user = await prisma.user.findUnique({
             where: {
                 id

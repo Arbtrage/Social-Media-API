@@ -1,4 +1,4 @@
-import { getAllUsers, getUserById, refreshToken } from '../../modules/user/user.service';
+import { getAllUsers, getUserById, refreshToken,getUserByName } from '../../modules/user/user.service';
 import { BadRequestError, UnauthorizedError } from '../../utils/error'
 import { Context } from '../../context';
 
@@ -12,14 +12,22 @@ export default {
         throw new BadRequestError(`Failed to fetch users: ${(error as Error).message}`);
       }
     },
-    user: async (_: any, { id }: { id: string }) => {
+    user: async (_: any, { id }: { id: string },context: Context) => {
       try {
-        const response = await getUserById(id);
+        const response = await getUserById(id,context);
         return response;
       } catch (error: unknown) {
         throw new BadRequestError(`Failed to fetch user: ${(error as Error).message}`);
       }
     },
+    usersByUsername: async (_: any, { username }: { username: string },context: Context) => {
+      try {
+        const response = await getUserByName(username,context);
+        return response;
+      } catch (error: unknown) {
+        throw new BadRequestError(`Failed to fetch user: ${(error as Error).message}`);
+      }
+    }
   },
   Mutation: {
     refreshToken: async (_: any, args: { refreshToken: string },context: Context) => {

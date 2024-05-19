@@ -28,7 +28,7 @@ export const loginUser = async (email: string, password: string) => {
             where: { id: user.id },
             data: { refreshToken },
         });
-        const accessToken = jwt.sign({ userId: user.id }, config.jwtSecret);
+        const accessToken = jwt.sign({ userId: user.id }, config.jwtSecret );
         return { message: "Login Successfull !!", data: { accessToken, refreshToken } };
     } catch (error) {
         throw new Error(`Login failed: ${(error as Error).message}`);

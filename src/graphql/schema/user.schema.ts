@@ -36,6 +36,7 @@ type TokenResponse {
 type Query {
   users: UsersResponse
   user(id: ID!): UserResponse
+  usersByUsername(username: String!): UsersResponse
 }
 
 type Mutation {

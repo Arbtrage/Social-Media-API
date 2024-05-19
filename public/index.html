@@ -1,218 +1,660 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Social Media API Documentation</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        h1, h2, h3, h4 {
-            color: #333;
-        }
-        pre {
-            background: #f4f4f4;
-            padding: 10px;
-            border-radius: 4px;
-            overflow: auto;
-        }
-        .endpoint {
-            margin-bottom: 20px;
-        }
-        #toc {
-            margin-bottom: 20px;
-        }
-        #toc a {
-            text-decoration: none;
-            color: #007bff;
-        }
-        #toc a:hover {
-            text-decoration: underline;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        color: #333;
+      }
+
+      code {
+        background: #cfcbcb;
+        padding: 10px;
+        width: 100%;
+        border-radius: 4px;
+        overflow: auto;
+        height: fit-content;
+      }
+      .folder-structure {
+        font-family: monospace;
+        line-height: 1.5;
+        background: #f4f4f4;
+        padding: 10px;
+        border-radius: 4px;
+        overflow: auto;
+      }
+
+      pre {
+        background: #f4f4f4;
+        padding: 10px;
+        border-radius: 4px;
+        overflow: auto;
+      }
+
+      .endpoint {
+        margin-bottom: 20px;
+      }
+
+      .responsive-img {
+        max-width: 100%;
+        height: auto;
+      }
     </style>
-</head>
-<body>
+  </head>
+
+  <body>
     <h1>Social Media API Documentation</h1>
-    <p>This comprehensive documentation outlines how to interact with the GraphQL API using Postman for each defined schema and its operations.</p>
+    <p>
+      This comprehensive documentation outlines how to interact with the GraphQL
+      API using Postman for each defined schema and its operations.
+    </p>
+
+    <h2>Endpoints</h2>
+    <div class="endpoint">
+      <h3>GraphQL Endpoint</h3>
+      <p>URL: <code>/graphql</code></p>
+      <p>
+        Description: This is the main GraphQL endpoint where you can execute
+        queries and mutations.
+      </p>
+    </div>
+    <div class="endpoint">
+      <h3>GraphQL Playground</h3>
+      <p>URL: <code>/playground</code></p>
+      <p>
+        Description: Use this endpoint to access the GraphQL Playground, an
+        interactive in-browser GraphQL IDE.
+      </p>
+    </div>
 
     <h2>Table of Contents</h2>
     <div id="toc">
-        <ol>
-            <li><a href="#install-docs">Install Docs</a></li>
-            <li><a href="#readme-docs">Readme Docs</a></li>
-            <li><a href="#api-docs">API Docs</a></li>
-        </ol>
+      <ol>
+        <li><a href="#install-docs">Install Docs</a></li>
+        <li><a href="#readme-docs">Readme Docs</a></li>
+        <li><a href="#schema-design">Database Schema</a></li>
+        <li>
+          <a href="#project-folder-structure">Project Folder Structure</a>
+        </li>
+      </ol>
     </div>
 
+    <h2>Run in Postman</h2>
+    <a
+      href="https://www.postman.com/supply-geoscientist-11823147/workspace/arbtrage/collection/6647b0b71c2319b0970f7a45"
+      target="_blank"
+    >
+      <img src="https://run.pstmn.io/button.svg" alt="Run in Postman" />
+    </a>
+
     <h2 id="install-docs">Install Docs</h2>
-    <pre>
-# Installation Instructions
-
-1. Clone the repository:
-   git clone https://github.com/your-repo/social-media-api.git
-
-2. Navigate to the project directory:
-   cd social-media-api
-
-3. Install dependencies:
-   yarn install
-
-4. Set up environment variables:
-   cp .env.example .env
-
-5. Run the application:
-   yarn dev
-    </pre>
+    <div
+      style="
+        background: #f4f4f4;
+        padding: 10px;
+        border-radius: 4px;
+        overflow: auto;
+      "
+    >
+      <h1>Installation Instructions</h1>
+      <ol>
+        <li>
+          <p>Install dependencies:</p>
+          <pre><code class="language-bash">yarn install
+</code></pre>
+        </li>
+        <li>
+          <p>Set up environment variables:</p>
+          <pre><code class="language-bash">cp .env.example .env
+</code></pre>
+        </li>
+        <li>
+          <p>Configure Database using Docker</p>
+          <pre><code class="language-bash">docker-compose up --build -d
+</code></pre>
+        </li>
+        <li>
+          <p>Configure Database using Prisma</p>
+          <pre><code class="language-bash">yarn prisma:generate:dev # Generate Prisma Client
+</code></pre>
+          <pre><code class="language-bash">yarn prisma:migrate:dev # Apply Prisma Migrations
+</code></pre>
+        </li>
+        <li>
+          <p>Seed the database</p>
+          <pre><code class="language-bash">yarn seed
+</code></pre>
+        </li>
+        <li>
+          <p>Run the application:</p>
+          <pre><code class="language-bash">yarn dev
+</code></pre>
+        </li>
+        <li>
+          <p>Test the application:</p>
+          <pre><code class="language-bash">yarn test
+</code></pre>
+        </li>
+      </ol>
+    </div>
 
     <h2 id="readme-docs">Readme Docs</h2>
-    <pre>
-# Readme
+    <div
+      style="
+        background: #f4f4f4;
+        padding: 10px;
+        border-radius: 4px;
+        overflow: auto;
+      "
+    >
+      <h2>Features</h2>
+      <h3>User Management</h3>
+      <ul>
+        <li>
+          <strong>Create a User Profile</strong>: Users can register by creating
+          a profile with a unique identifier, email, and password.
+        </li>
+        <li>
+          <strong>Login to the Created Profile</strong>: Users can log in using
+          their email and password.
+        </li>
+        <li>
+          <strong>Find &amp; Follow People That You Know</strong>: Users can
+          search for and follow other users by their name or unique identifier.
+        </li>
+      </ul>
+      <h3>Content Management</h3>
+      <ul>
+        <li>
+          <strong>Create Content</strong>: Users can create posts with media
+          and/or text. The posts will be available in the feed of users who
+          follow them.They can schedule post content according to mins or a
+          particular date.
+        </li>
+        <li>
+          <strong>View Content Posted by People You Follow</strong>: Users can
+          view posts from people they follow in their content feed.
+        </li>
+        <li>
+          <strong
+            >Like &amp; Comment on Content Posted by People You Follow</strong
+          >: Users can interact with posts by liking and commenting on them.
+        </li>
+      </ul>
+      <h3>Content Feed</h3>
+      <ul>
+        <li>
+          <strong>Personalized Feed</strong>: Each user has a unique feed that
+          includes posts from users they follow and their own posts.
+        </li>
+        <li>
+          <strong>Post Interactions</strong>: The feed reflects the number of
+          likes and comments each post has received.
+        </li>
+      </ul>
+      <h3>Likes</h3>
+      <ul>
+        <li>
+          <strong>Like Posts</strong>: Users can like posts created by others.
+        </li>
+        <li>
+          <strong>Unlike Posts</strong>: Users can remove their likes from
+          posts.
+        </li>
+        <li>
+          <strong>Single Like per User</strong>: Each user can only like a post
+          once.
+        </li>
+      </ul>
+      <h3>Comments</h3>
+      <ul>
+        <li>
+          <strong>Comment on Posts</strong>: Users can comment on their own
+          posts or posts created by others.
+        </li>
+        <li>
+          <strong>Edit/Remove Comments</strong>: Users can add, edit, or remove
+          their comments.
+        </li>
+        <li>
+          <strong>Comment Restrictions</strong>: Comments can be disabled by the
+          post creator.
+        </li>
+      </ul>
+      <h2>API Endpoints</h2>
+      <h3>1. Authentication</h3>
+      <h4>Register User</h4>
+      <ul>
+        <li>
+          <strong>Description</strong>: Registers a new user and returns a JSON
+          web token for authentication.
+        </li>
+      </ul>
+      <h4>Login User</h4>
+      <ul>
+        <li>
+          <strong>Description</strong>: Authenticates a user and returns a JSON
+          web token for further requests.
+        </li>
+      </ul>
+      <h3>2. User Operations</h3>
+      <h4>Find People</h4>
+      <ul>
+        <li>
+          <strong>Description</strong>: Allows users to search for other users
+          by their name or unique identifier.
+        </li>
+      </ul>
+      <h4>Follow People</h4>
+      <ul>
+        <li>
+          <strong>Description</strong>: Allows users to follow other users.
+        </li>
+      </ul>
+      <h4>Refresh TOken</h4>
+      <ul>
+        <li>
+          <strong>Description</strong>: Refreshes the accessToken after it has
+          expired
+        </li>
+      </ul>
+      <h3>3. Content Operations</h3>
+      <h4>Content Feed</h4>
+      <ul>
+        <li>
+          <strong>Description</strong>: Retrieves the posts from users the
+          logged-in user follows, as well as the user's own posts.
+        </li>
+      </ul>
+      <h4>Content Details</h4>
+      <ul>
+        <li>
+          <strong>Description</strong>: Retrieves details of a single post,
+          including its likes and comments.
+        </li>
+      </ul>
+      <h4>Create Content</h4>
+      <ul>
+        <li>
+          <strong>Description</strong>: Allows users to create new posts or
+          remove existing posts.
+        </li>
+      </ul>
+      <h3>4. Interaction Operations</h3>
+      <h4>Comment</h4>
+      <ul>
+        <li>
+          <strong>Description</strong>: Allows users to create, edit, or delete
+          comments on posts.
+        </li>
+      </ul>
+      <h4>Like</h4>
+      <ul>
+        <li>
+          <strong>Description</strong>: Allows users to like or remove likes
+          from posts.
+        </li>
+      </ul>
+      <h2>Scheduler</h2>
+      <ol>
+        <li>
+          <p><strong>Scheduled Action</strong></p>
+          <ul>
+            <li>
+              <strong>Description</strong>: Provides users with the ability to
+              schedule content posting. Uses Node-Cron as cron jobs to schedule
+              posts every minute.
+            </li>
+          </ul>
+        </li>
+      </ol>
+      <h2>Technical Details</h2>
+      <ul>
+        <li><strong>Language</strong>: TypeScript,Node.js(Run time Env)</li>
+        <li>
+          <strong>Libraries</strong>: Apollo Server , Prisma, Express.js,
+          Node.js, Express.js, TypeScript, Postman, Jest, PostgreSQL, Node-Cron,
+          Jest, Vercel
+        </li>
+        <li><strong>Database</strong>: PostgreSQL using Prisma ORM.</li>
+        <li>
+          <strong>API Documentation</strong>: Provided through Postman
+          Collection, which includes all API endpoints and their descriptions.
+        </li>
+        <li><strong>Others</strong>: Docker container, Vercel CLI , Vercel</li>
 
-## Overview
-This is a social media API that allows users to create posts, follow other users, and interact with posts through likes and comments.
+      </ul>
+    </div>
 
-## Features
-- User Authentication
-- Create, Read, Update, Delete Posts
-- Follow/Unfollow Users
-- Like/Unlike Posts
-- Comment on Posts
+    <h2 id="schema-design">Schema Design</h2>
+    <img src="/api.png" alt="API Diagram" class="responsive-img" />
 
-## Tech Stack
-- Node.js
-- Express.js
-- Apollo Server
-- Prisma
-- PostgreSQL
-    </pre>
+    <h2 id="project-folder-structure">Project Folder Structure</h1>
+    <div class="folder-structure">
+      <ul>
+        <li class="folder">
+          /social-media-backend
+          <ul>
+            <li class="folder">
+              src
+              <ul>
+                <li class="folder">
+                  config
+                  <ul>
+                    <li class="file">index.ts</li>
+                  </ul>
+                </li>
+                <li class="folder">
+                  context
+                  <ul>
+                    <li class="file">index.ts</li>
+                  </ul>
+                </li>
+                <li class="folder">
+                  graphql
+                  <ul>
+                    <li class="file">index.ts</li>
+                    <li class="folder">
+                      schema
+                      <ul>
+                        <li class="file">comment.schema.ts</li>
+                        <li class="file">follow.schema.ts</li>
+                        <li class="file">like.schema.ts</li>
+                        <li class="file">post.schema.ts</li>
+                        <li class="file">user.schema.ts</li>
+                      </ul>
+                    </li>
+                    <li class="folder">
+                      resolvers
+                      <ul>
+                        <li class="file">comment.resolvers.ts</li>
+                        <li class="file">follow.resolvers.ts</li>
+                        <li class="file">like.resolvers.ts</li>
+                        <li class="file">post.resolvers.ts</li>
+                        <li class="file">user.resolvers.ts</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li class="folder">
+                  middleware
+                  <ul>
+                    <li class="file">auth.ts</li>
+                  </ul>
+                </li>
+                <li class="folder">
+                  modules
+                  <ul>
+                    <li class="folder">
+                      auth
+                      <ul>
+                        <li class="file">auth.service.ts</li>
+                      </ul>
+                    </li>
+                    <li class="folder">
+                      comment
+                      <ul>
+                        <li class="file">comment.service.ts</li>
+                      </ul>
+                    </li>
+                    <li class="folder">
+                      follow
+                      <ul>
+                        <li class="file">follow.service.ts</li>
+                      </ul>
+                    </li>
+                    <li class="folder">
+                      like
+                      <ul>
+                        <li class="file">like.service.ts</li>
+                      </ul>
+                    </li>
+                    <li class="folder">
+                      post
+                      <ul>
+                        <li class="file">post.service.ts</li>
+                      </ul>
+                    </li>
+                    <li class="folder">
+                      user
+                      <ul>
+                        <li class="file">user.service.ts</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li class="file">server.ts</li>
+                <li class="folder">
+                  types
+                  <ul>
+                    <li class="file">index.d.ts</li>
+                  </ul>
+                </li>
+                <li class="folder">
+                  utils
+                  <ul>
+                    <li class="file">index.ts</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li class="folder">
+              test
+              <ul>
+                <li class="file">auth.test.ts</li>
+                <li class="file">comment.test.ts</li>
+                <li class="file">follow.test.ts</li>
+                <li class="file">like.test.ts</li>
+                <li class="file">post.test.ts</li>
+                <li class="file">user.test.ts</li>
+              </ul>
+            </li>
+            <li class="file">.env</li>
+            <li class="file">.eslintrc.js</li>
+            <li class="file">.gitignore</li>
+            <li class="file">Dockerfile</li>
+            <li class="file">docker-compose.yml</li>
+            <li class="file">package.json</li>
+            <li class="folder">
+              prisma
+              <ul>
+                <li class="file">schema.prisma</li>
+                <li class="folder">migrations</li>
+              </ul>
+            </li>
+            <li class="file">tsconfig.json</li>
+            <li class="file">yarn.lock</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
 
-    <h2 id="api-docs">API Docs</h2>
-    <div id="queries"></div>
-    <div id="mutations"></div>
-
-    <script>
-        const queriesContainer = document.getElementById('queries');
-        const mutationsContainer = document.getElementById('mutations');
-
-        fetch('/graphql', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                query: `
-                    {
-                        __schema {
-                            queryType {
-                                fields {
-                                    name
-                                    description
-                                    args {
-                                        name
-                                        description
-                                        type {
-                                            name
-                                            kind
-                                            ofType {
-                                                name
-                                                kind
-                                            }
-                                        }
-                                    }
-                                    type {
-                                        name
-                                        kind
-                                        ofType {
-                                            name
-                                            kind
-                                        }
-                                    }
-                                }
-                            }
-                            mutationType {
-                                fields {
-                                    name
-                                    description
-                                    args {
-                                        name
-                                        description
-                                        type {
-                                            name
-                                            kind
-                                            ofType {
-                                                name
-                                                kind
-                                            }
-                                        }
-                                    }
-                                    type {
-                                        name
-                                        kind
-                                        ofType {
-                                            name
-                                            kind
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                `
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-            const queryType = data.data.__schema.queryType;
-            const mutationType = data.data.__schema.mutationType;
-
-            displayOperations(queryType, queriesContainer, 'Queries');
-            displayOperations(mutationType, mutationsContainer, 'Mutations');
-        })
-        .catch(error => {
-            queriesContainer.textContent = 'Error fetching schema: ' + error.message;
-            mutationsContainer.textContent = 'Error fetching schema: ' + error.message;
-        });
-
-        function displayOperations(type, container, title) {
-            const operations = type.fields;
-            const sectionTitle = document.createElement('h3');
-            sectionTitle.textContent = title;
-            container.appendChild(sectionTitle);
-
-            operations.forEach(operation => {
-                const operationContainer = document.createElement('div');
-                operationContainer.className = 'endpoint';
-
-                const operationName = document.createElement('h4');
-                operationName.textContent = `${operation.name} (${title})`;
-                operationContainer.appendChild(operationName);
-
-                const operationDescription = document.createElement('p');
-                operationDescription.textContent = operation.description || 'No description available.';
-                operationContainer.appendChild(operationDescription);
-
-                const argsTitle = document.createElement('h5');
-                argsTitle.textContent = 'Arguments:';
-                operationContainer.appendChild(argsTitle);
-
-                const argsList = document.createElement('ul');
-                operation.args.forEach(arg => {
-                    const argItem = document.createElement('li');
-                    argItem.textContent = `${arg.name}: ${arg.type.name || arg.type.ofType.name}`;
-                    argsList.appendChild(argItem);
-                });
-                operationContainer.appendChild(argsList);
-
-                const returnType = document.createElement('p');
-                returnType.textContent = `Returns: ${operation.type.name || operation.type.ofType.name}`;
-                operationContainer.appendChild(returnType);
-
-                container.appendChild(operationContainer);
-            });
-        }
-    </script>
-</body>
+    <h3>Description</h3>
+    <ul>
+      <li>
+        <p><strong>src/config</strong>: Configuration files.</p>
+        <ul>
+          <li><code>index.ts</code>: Main configuration file.</li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>src/context</strong>: GraphQL context.</p>
+        <ul>
+          <li><code>index.ts</code>: Main context file.</li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>src/graphql</strong>: GraphQL schemas and resolvers.</p>
+        <ul>
+          <li>
+            <code>index.ts</code>: Main file to combine all schemas and
+            resolvers.
+          </li>
+          <br />
+          <li>
+            <strong>schema</strong>: Contains individual schema files for each
+            entity.
+            <ul>
+              <br />
+              <li><code>comment.schema.ts</code>: Schema for comments.</li>
+              <br />
+              <li><code>follow.schema.ts</code>: Schema for follows.</li>
+              <br />
+              <li><code>like.schema.ts</code>: Schema for likes.</li>
+              <br />
+              <li><code>post.schema.ts</code>: Schema for posts.</li>
+              <br />
+              <li><code>user.schema.ts</code>: Schema for users.</li>
+              <br />
+            </ul>
+          </li>
+          <li>
+            <strong>resolvers</strong>: Contains individual resolver files for
+            each entity.
+            <ul>
+              <br />
+              <li>
+                <code>comment.resolvers.ts</code>: Resolvers for comments.
+              </li>
+              <br />
+              <li><code>follow.resolvers.ts</code>: Resolvers for follows.</li>
+              <br />
+              <li><code>like.resolvers.ts</code>: Resolvers for likes.</li>
+              <br />
+              <li><code>post.resolvers.ts</code>: Resolvers for posts.</li>
+              <br />
+              <li><code>user.resolvers.ts</code>: Resolvers for users.</li>
+              <br />
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p>
+          <strong>src/modules</strong>: Modules for each entity, encapsulating
+          related services.
+        </p>
+        <ul>
+          <li>
+            <strong>auth</strong>: Authentication-related services.
+            <ul>
+              <br />
+              <li><code>auth.service.ts</code>: Service for authentication.</li>
+              <br />
+            </ul>
+          </li>
+          <li>
+            <strong>comment</strong>: Comment-related services.
+            <ul>
+              <br />
+              <li><code>comment.service.ts</code>: Service for comments.</li>
+              <br />
+            </ul>
+          </li>
+          <li>
+            <strong>follow</strong>: Follow-related services.
+            <ul>
+              <br />
+              <li><code>follow.service.ts</code>: Service for follows.</li>
+              <br />
+            </ul>
+          </li>
+          <li>
+            <strong>like</strong>: Like-related services.
+            <ul>
+              <br />
+              <li><code>like.service.ts</code>: Service for likes.</li>
+              <br />
+            </ul>
+          </li>
+          <li>
+            <strong>post</strong>: Post-related services.
+            <ul>
+              <br />
+              <li><code>post.service.ts</code>: Service for posts.</li>
+              <br />
+            </ul>
+          </li>
+          <li>
+            <strong>user</strong>: User-related services.
+            <ul>
+              <br />
+              <li><code>user.service.ts</code>: Service for users.</li>
+              <br />
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>src/server.ts</strong>: Server entry point.</p>
+      </li>
+      <li>
+        <p><strong>src/types</strong>: TypeScript types.</p>
+        <ul>
+          <li><code>index.d.ts</code>: Main type declarations.</li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>src/utils</strong>: Utility functions.</p>
+        <ul>
+          <li><code>index.ts</code>: Main utility functions.</li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>test</strong>: Test files.</p>
+        <ul>
+          <li><code>auth.test.ts</code>: Tests for authentication.</li>
+          <br />
+          <li><code>user.test.ts</code>: Tests for users.</li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>.env</strong>: Environment variables.</p>
+      </li>
+      <li>
+        <p><strong>.eslintrc.js</strong>: ESLint configuration.</p>
+      </li>
+      <li>
+        <p><strong>.gitignore</strong>: Git ignore file.</p>
+      </li>
+      <li>
+        <p><strong>Dockerfile</strong>: Docker configuration.</p>
+      </li>
+      <li>
+        <p>
+          <strong>docker-compose.yml</strong>: Docker Compose configuration.
+        </p>
+      </li>
+      <li>
+        <p><strong>package.json</strong>: NPM package configuration.</p>
+      </li>
+      <li>
+        <p><strong>prisma</strong>: Prisma schema and migrations.</p>
+        <ul>
+          <li><code>schema.prisma</code>: Prisma schema.</li>
+          <br />
+          <li><strong>migrations</strong>: Prisma migrations.</li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>tsconfig.json</strong>: TypeScript configuration.</p>
+      </li>
+      <li>
+        <p><strong>yarn.lock</strong>: Yarn lock file.</p>
+      </li>
+    </ul>
+  </body>
 </html>
